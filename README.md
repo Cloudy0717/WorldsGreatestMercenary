@@ -8,9 +8,8 @@
 
 <br>
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=1000&color=8B4513&center=true&vCenter=true&width=600&lines=World's+Greatest+Mercenary;世界最強傭兵" alt="Title Typing SVG"/>
-</p>
+<h1 align="center">World's Greatest Mercenary</h1>
+<h3 align="center">世界最強傭兵</h3>
 
 <p align="center">
   <i>A classic fantasy RPG built with RPG Maker MZ</i>
