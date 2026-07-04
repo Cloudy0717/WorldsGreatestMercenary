@@ -1,0 +1,5 @@
+[
+null,
+{"id":1,"battlerName":"Actor1_1","characterIndex":0,"characterName":"Actor1","classId":1,"equips":[1,0,2,3,0],"faceIndex":0,"faceName":"Actor1","traits":[],"initialLevel":1,"maxLevel":99,"name":"艾倫","nickname":"","note":"","profile":"為了妹妹而踏上傭兵之路的年輕劍士。目標是成為世界最強的傭兵——「巔峰之刃」。"},
+{"id":2,"battlerName":"","characterIndex":1,"characterName":"People1","classId":1,"equips":[0,0,0,0,0],"faceIndex":1,"faceName":"People1","traits":[],"initialLevel":1,"maxLevel":99,"name":"莉亞","nickname":"","note":"","profile":"艾倫的妹妹，天真善良。是艾倫最重要的牽絆與動力來源。"}
+]

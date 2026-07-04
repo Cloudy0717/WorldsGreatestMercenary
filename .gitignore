@@ -1,0 +1,17 @@
+# RPG Maker MZ
+*.rpgmvp
+*.rpgmvm
+*.rpgmvo
+Thumbs.db
+Desktop.ini
+
+# Editor backup
+*.bak
+*.old
+
+# OS files
+.DS_Store
+__MACOSX
+
+# Temp scripts
+*.py
