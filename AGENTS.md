@@ -59,6 +59,18 @@ parameters: [selfSwitchCh, operation]
 
 **CRITICAL**: code 121 = Control Switches (`$gameSwitches`), code 123 = Control Self Switch (`$gameSelfSwitches`). DO NOT confuse them.
 
+## Switch Map (System.json switches)
+
+| ID | Name | Set When |
+|----|------|----------|
+| 1 | 开场剧情完成 | Opening cutscene ends (EV003 → SelfA → 105) |
+| 2 | 首次回家 | Player enters home first time (not yet implemented) |
+| 3 | 莉亞的信件1 | Not yet implemented |
+| 4 | 第二章开启 | Sister reunites with medicine money (EV002 Page 4, code 121) |
+| 5 | 第三章开启 | Not yet implemented |
+| 6 | 第四章开启 | Not yet implemented |
+| 7 | 第五章开启 | Not yet implemented |
+
 ## Shop Processing (code 302)
 
 ```javascript

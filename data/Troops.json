@@ -1,9 +1,13 @@
-﻿[
+[
 null,
 {"id":1,"members":[{"enemyId":1,"x":336,"y":436,"hidden":false}],"name":"Goblin*1","pages":[{"conditions":{"actorHp":50,"actorId":1,"actorValid":false,"enemyHp":50,"enemyIndex":0,"enemyValid":false,"switchId":1,"switchValid":false,"turnA":0,"turnB":0,"turnEnding":false,"turnValid":false},"list":[{"code":0,"indent":0,"parameters":[]}],"span":0}]},
 {"id":2,"members":[{"enemyId":2,"x":337,"y":436,"hidden":false}],"name":"Gnome*1","pages":[{"conditions":{"actorHp":50,"actorId":1,"actorValid":false,"enemyHp":50,"enemyIndex":0,"enemyValid":false,"switchId":1,"switchValid":false,"turnA":0,"turnB":0,"turnEnding":false,"turnValid":false},"list":[{"code":0,"indent":0,"parameters":[]}],"span":0}]},
 {"id":3,"members":[{"enemyId":3,"x":408,"y":436,"hidden":false}],"name":"Crow*1","pages":[{"conditions":{"actorHp":50,"actorId":1,"actorValid":false,"enemyHp":50,"enemyIndex":0,"enemyValid":false,"switchId":1,"switchValid":false,"turnA":0,"turnB":0,"turnEnding":false,"turnValid":false},"list":[{"code":0,"indent":0,"parameters":[]}],"span":0}]},
 {"id":4,"members":[{"enemyId":4,"x":408,"y":436,"hidden":false}],"name":"树怪","pages":[{"conditions":{"actorHp":50,"actorId":1,"actorValid":false,"enemyHp":50,"enemyIndex":0,"enemyValid":false,"switchId":1,"switchValid":false,"turnA":0,"turnB":0,"turnEnding":false,"turnValid":false},"list":[{"code":0,"indent":0,"parameters":[]}],"span":0}]},
-{"id":5,"members":[{"enemyId":5,"x":408,"y":436,"hidden":false}],"name":"紫火焰羊","pages":[{"conditions":{"actorHp":50,"actorId":1,"actorValid":false,"enemyHp":50,"enemyIndex":0,"enemyValid":false,"switchId":1,"switchValid":false,"turnA":0,"turnB":0,"turnEnding":false,"turnValid":false},"list":[{"code":0,"indent":0,"parameters":[]}],"span":0}]},
+{"id":5,"members":[{"enemyId":5,"x":408,"y":436,"hidden":false}],"name":"哥布林王","pages":[{"conditions":{"actorHp":50,"actorId":1,"actorValid":false,"enemyHp":50,"enemyIndex":0,"enemyValid":false,"switchId":1,"switchValid":false,"turnA":0,"turnB":0,"turnEnding":false,"turnValid":false},"list":[{"code":0,"indent":0,"parameters":[]}],"span":0}]},
 {"id":6,"members":[{"enemyId":6,"x":408,"y":436,"hidden":false}],"name":"Crab*1","pages":[{"conditions":{"actorHp":50,"actorId":1,"actorValid":false,"enemyHp":50,"enemyIndex":0,"enemyValid":false,"switchId":1,"switchValid":false,"turnA":0,"turnB":0,"turnEnding":false,"turnValid":false},"list":[{"code":0,"indent":0,"parameters":[]}],"span":0}]},
-null,null,null,null]
+null,
+null,
+null,
+null
+]
