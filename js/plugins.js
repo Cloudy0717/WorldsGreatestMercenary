@@ -5,5 +5,6 @@ var $plugins =
 {"name":"AltMenuScreen","status":true,"description":"","parameters":{}},
 {"name":"AltSaveScreen","status":true,"description":"","parameters":{}},
 {"name":"ButtonPicture","status":true,"description":"","parameters":{}},
-{"name":"TextPicture","status":true,"description":"","parameters":{}}
+{"name":"TextPicture","status":true,"description":"","parameters":{}},
+{"name":"AutoSave","status":true,"description":"","parameters":{}}
 ];
