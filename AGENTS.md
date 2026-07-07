@@ -71,6 +71,14 @@ parameters: [selfSwitchCh, operation]
 | 6 | 第四章开启 | Not yet implemented |
 | 7 | 第五章开启 | Not yet implemented |
 
+## Variable Map (System.json variables)
+
+| ID | Name | Values |
+|----|------|--------|
+| 0 | 主線：哥布林討伐 | Ch1 quest progress |
+| 1 | (used for sister's medicine money tracking) | 0=start, 1=accepted, 2=quest done, 3=returned |
+| 2 | 第二章：遺跡調查進度 | 0=未接, 1=已接, 2=BOSS擊敗, 3=已回報 |
+
 ## Shop Processing (code 302 / 605)
 
 ```javascript
@@ -138,6 +146,7 @@ case 7: // Gold
 | EV004 | 森林武器店 | (27,15) | Map015 (10,15) | (27,16) |
 | EV005 | 森林公會 | (27,27) | Map016 (10,15) | (27,28) |
 | EV006 | 民宅 | (9,23) | Map017 (10,15) | (9,24) |
+| EV007 | 往森林道路 | (17,0) | Map018 (17,0) | — |
 
 Each door event uses `!Door1` (index 4), priority=1, trigger=0.  
 Interiors follow Map040 template (17×17, tileset 3, identical to Map006/007/008).
@@ -151,7 +160,82 @@ Each interior has EV001 (exit door at (10,15) → back to Map012) and EV002 (NPC
 | 013 | 森林旅館 | 旅館老闆 | (9,5) | People2 idx=1 | 50G rest, Recover All |
 | 014 | 森林道具店 | 道具店店主 | (9,5) | People4 idx=2 | Shop (Potion, Super Potion, Antidote, etc.) |
 | 015 | 森林武器店 | 武器防具店店主 | (9,5) | People1 idx=0 | Shop (weapons + armors) |
-| 016 | 森林公會 | 公會接待員 | (9,5) | People3 idx=0 | Dialog (Chapter 2 hints) |
+| 016 | 森林公會 | 公會接待員 | (9,5) | People3 idx=0 | Ch2 quest (5 pages, Var2 tracking) |
 | 017 | 民宅 | 居民 | (8,8) | People2 idx=3 | Dialog (town guide) |
 
 All interiors use the same tile data as Map040 (= Map006/007/008), 17×17, tileset 3.
+
+## Chapter 2 Maps (Map018–020)
+
+Map connection flow: Map012 (north) ↔ Map018 (森林道路) ↔ Map019 (密林遺跡) ↔ Map020 (遺跡深處)
+
+| Map | Name | Size | Tileset | Source | Encounters | BGM |
+|-----|------|------|---------|--------|------------|-----|
+| 018 | 森林道路 | 18×30 | 2 (Forest/Outside) | RMMZ sample Map013 | Troop 1 (Gnome), Troop 2 (Crow), Troop 3 (树怪) | — |
+| 019 | 密林遺跡 | 20×30 | 4 (Dungeon) | Casper Gaming Cave Pack — Stone Cave (Map015) | Troop 4 (紫火焰羊), Troop 6 (恶魔法师), Troop 3 (树怪) | Dungeon1 |
+| 020 | 遺跡深處 | 40×40 | 4 (Dungeon) | Casper Gaming Cave Pack — Dirt Cave (Map014) | None (boss room) | Battle2 |
+
+### Map018 森林道路 — Events (8 total)
+
+| Event | Name | Position | Type | Details |
+|-------|------|----------|------|---------|
+| EV01 | 往森林城鎮 | (0,8) | Door → Map012 (19,4) | Left south exit |
+| EV02 | 往密林遺跡 | (17,13) | Door → Map019 (3,28) | Right north exit |
+| EV03 | 往森林城鎮 | (0,9) | Door → Map012 (19,4) | Left south exit (2nd tile) |
+| EV04 | 往密林遺跡 | (17,14) | Door → Map019 (3,28) | Right north exit (2nd tile) |
+| EV05 | 路標 | (12,2) | Signpost (Action) | "▲往北：密林遺跡 ▼往南：森林城鎮" |
+| EV06 | 旅行者 | (6,4) | NPC (Talk) | People2 idx=3; Page1: Sw4→hint ruins, Page2: generic |
+| EV07 | 獵人 | (14,7) | NPC (Talk) | People1 idx=5; Sw4→give Potion once (SelfA), then remind |
+| EV08 | 草叢 | (2,6) | Hidden item (Talk) | Give Dispel Herb once (SelfA), then empty |
+
+### Map019 密林遺跡 — Events (7 total)
+
+| Event | Name | Position | Type | Details |
+|-------|------|----------|------|---------|
+| EV01 | 往森林道路 | (3,29) | Door → Map018 (16,13) | Entrance |
+| EV02 | 往遺跡深處 | (8,6) | Door → Map020 (23,29) | Page1 (Var2=1): hint then transfer; Page2: direct |
+| EV03 | 古代祭壇 | (10,14) | Investigation (Talk) | Page1 (Var2=1): lore about altar; Page2: generic |
+| EV04 | 寶箱 | (4,20) | Chest (Action) | Give Potion once (SelfA) |
+| EV05 | 魔物偷襲 | (15,12) | Ambush (Touch→Battle) | Troop 4, once (SelfA) |
+| EV06 | 筆記碎片 | (7,24) | Lore (Talk) | Adventurer's journal, foreshadows boss |
+| EV07 | 破裂的牆壁 | (10,0) | Decoration (Talk) | Giant claw marks on wall |
+
+### Map020 遺跡深處 — Events (3 total)
+
+| Event | Name | Position | Type | Details |
+|-------|------|----------|------|---------|
+| EV01 | 出口 | (23,30) | Door → Map019 (8,7) | Exit |
+| EV02 | 遺跡守護者 | (20,20) | Boss (Action) | Page1 (Var2=1): cutscene→Battle Troop7→Var2=2; Page2 (Var2=2): post-boss; Page3: hint |
+| EV03 | 寶箱 | (33,25) | Chest (Action) | Give Dragon Blade (Weapon 5) once (SelfA) |
+
+### Ch2 Quest Flow (Var 2 tracking)
+1. Var2=0: Guild offers quest (Sw4 ON) → Accept → Var2=1
+2. Var2=1: Go to Map19 → Map20 → Boss fight → Set Var2=2
+3. Var2=2: Return to guild → Report → Var2=3 (reward 2000G + Magic Water)
+4. Var2=3: Quest completed, guild thanks player
+
+Note: Map019-020 use `tilesetId: 4` (our Dungeon), converted from Cave Pack's ts=1. Tile IDs are 100% compatible (both default MZ RTP).
+
+## External Resources Used
+
+| Resource | Source | License | Used For |
+|----------|--------|---------|----------|
+| Cave Map Pack (5 maps) | Casper Gaming (itch.io, free) | MZ RTP, credit Casper Gaming | Map019 (Dirt Cave), Map020 (Stone Cave) |
+| RMMZ Sample Maps (104 maps) | RPG Maker MZ v1.0.1 | Included with MZ license | Map templates throughout |
+
+## Enemies & Troops
+
+| Enemy ID | Name | HP | ATK | DEF | Battler | Used By |
+|----------|------|----|-----|-----|---------|---------|
+| 0 | Goblin | — | — | — | — | — |
+| 1 | Gnome | — | — | — | — | Troop 1 |
+| 2 | Crow | — | — | — | — | Troop 2 |
+| 3 | 树怪 | — | — | — | — | Troop 3 |
+| 4 | 紫火焰羊 | — | — | — | — | Troop 4 |
+| 5 | 哥布林王 | 500 | 40 | 25 | Highking | Troop 5 (Ch1 boss) |
+| 6 | 恶魔法师 | — | — | — | — | Troop 6 |
+| 7 | 遺跡守護者 | 1500 | 60 | 40 | Stoneknight | Troop 7 (Ch2 boss) |
+
+Troops: ID 1-7, each has a single member. Troop 7 = Ch2 boss (遺跡守護者).
+Boss drops: Dragon Blade (Weapon 5, 1/4), Full Potion (Item 9, 1/2).
+Boss traits: Physical ×0.8, Magical ×1.2, No crit.

@@ -9,9 +9,34 @@ Desktop.ini
 *.bak
 *.old
 
+# Save files
+save/
+
+# Debug log
+debug.log
+
 # OS files
 .DS_Store
 __MACOSX
 
 # Temp scripts
 *.py
+
+# nw.js runtime (Game.exe deployment)
+Game.exe
+nw.dll
+nw_elf.dll
+node.dll
+ffmpeg.dll
+resources.pak
+nw_100_percent.pak
+nw_200_percent.pak
+locales/
+D3Dcompiler_47.dll
+
+icudtl.dat
+libEGL.dll
+libGLESv2.dll
+v8_context_snapshot.bin
+nacl_irt_x86_64.nexe
+credits.html
