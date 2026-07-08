@@ -223,19 +223,59 @@ Note: Map019-020 use `tilesetId: 4` (our Dungeon), converted from Cave Pack's ts
 | Cave Map Pack (5 maps) | Casper Gaming (itch.io, free) | MZ RTP, credit Casper Gaming | Map019 (Dirt Cave), Map020 (Stone Cave) |
 | RMMZ Sample Maps (104 maps) | RPG Maker MZ v1.0.1 | Included with MZ license | Map templates throughout |
 
-## Enemies & Troops
+## Enemies & Troops (Phase 4 Balance Applied)
 
-| Enemy ID | Name | HP | ATK | DEF | Battler | Used By |
-|----------|------|----|-----|-----|---------|---------|
-| 0 | Goblin | — | — | — | — | — |
-| 1 | Gnome | — | — | — | — | Troop 1 |
-| 2 | Crow | — | — | — | — | Troop 2 |
-| 3 | 树怪 | — | — | — | — | Troop 3 |
-| 4 | 紫火焰羊 | — | — | — | — | Troop 4 |
-| 5 | 哥布林王 | 500 | 40 | 25 | Highking | Troop 5 (Ch1 boss) |
-| 6 | 恶魔法师 | — | — | — | — | Troop 6 |
-| 7 | 遺跡守護者 | 1500 | 60 | 40 | Stoneknight | Troop 7 (Ch2 boss) |
+Params order: MHP, MMP, ATK, DEF, MAT, MDF, AGI, LUK
 
-Troops: ID 1-7, each has a single member. Troop 7 = Ch2 boss (遺跡守護者).
-Boss drops: Dragon Blade (Weapon 5, 1/4), Full Potion (Item 9, 1/2).
-Boss traits: Physical ×0.8, Magical ×1.2, No crit.
+| ID | Name | MHP | ATK | DEF | MAT | MDF | AGI | EXP | Gold | Battler | Area | Notes |
+|----|------|-----|-----|-----|-----|-----|-----|-----|------|---------|------|-------|
+| 0 | Goblin | 200 | 25 | 15 | 18 | 15 | 18 | 8 | 8 | Goblin | Ch1 early | Basic melee |
+| 1 | Gnome | 250 | 20 | 15 | 20 | 18 | 20 | 10 | 8 | Gnome | Ch1 early | Has Venom |
+| 2 | Crow | 200 | 18 | 12 | 18 | 15 | 28 | 12 | 7 | Crow | Ch1 early | Fast, frail |
+| 8 | 哥布林弓手 | 160 | 18 | 10 | 15 | 12 | 22 | 10 | 5 | Goblin(hue) | Ch1 early | Ranged, squishy |
+| 13 | 狼人 | 400 | 35 | 18 | 20 | 18 | 28 | 25 | 12 | Wolfman | Ch1 mid | Double attack |
+| 9 | 巨型蝙蝠 | 250 | 25 | 12 | 20 | 15 | 30 | 18 | 8 | Petitdevil | Ch1 mid | Poison, fast |
+| 3 | 树怪 | 600 | 35 | 22 | 30 | 28 | 25 | 35 | 20 | Treant | Ch1 cave | Fire weak(x2) |
+| 10 | 寶箱怪 | 700 | 30 | 30 | 20 | 25 | 15 | 60 | 150 | Mimic | Ch1 cave | Tanky, gold-rich |
+| 5 | 哥布林王 | 1000 | 50 | 25 | 45 | 30 | 30 | 100 | 200 | Highking | Ch1 boss | Dropped Elixir |
+| 4 | 紫火焰羊 | 1200 | 50 | 25 | 55 | 35 | 35 | 120 | 80 | Hi_monster | Ch1 cave+ | Fire magic |
+| 11 | 火蜥蜴 | 700 | 45 | 25 | 55 | 30 | 25 | 100 | 60 | Salamander | Ch2 road | Fire immune |
+| 12 | 石傀儡 | 1500 | 55 | 40 | 20 | 35 | 15 | 200 | 120 | Gatekeeper | Ch2 ruins | Phys resist(.7) |
+| 6 | 恶魔法师 | 2000 | 55 | 30 | 150 | 80 | 35 | 300 | 200 | Demoncount | Ch2 ruins | Dark magic |
+| 7 | 遺跡守護者 | 3500 | 90 | 50 | 60 | 50 | 20 | 600 | 1000 | Stoneknight | Ch2 boss | Phys×0.8 Mag×1.2 |
+
+Troops: ID 1-7 + ID 8-15 multi-enemy. Ch2 boss drops Dragon Blade (Weapon 5, 1/4).
+
+## 🚨 Encoding Warning: NEVER use PowerShell `Set-Content` / `ConvertTo-Json` on MZ JSON files
+
+RPG Maker MZ JSON files are **UTF-8 without BOM**. Using PowerShell to edit these files can corrupt Chinese text via cp1252 mojibake.
+
+### Safe approach: Use `rpgmaker-mz-*` MCP tools instead
+
+```javascript
+rpgmaker-mz_add_event_commands(mapId, eventId, commands, append)
+rpgmaker-mz_update_event(mapId, eventId, ...)
+```
+
+### If you MUST edit via script, use Python (not PowerShell)
+
+```python
+import json
+with open('MapXXX.json', 'rb') as f:
+    raw = f.read()
+if raw[:3] == b'\xef\xbb\xbf':
+    raw = raw[3:]  # strip BOM
+obj = json.loads(raw.decode('utf-8'))
+# ... modify obj ...
+output = json.dumps(obj, ensure_ascii=False, separators=(',', ':'))
+with open('MapXXX.json', 'wb') as f:
+    f.write(output.encode('utf-8'))
+```
+
+### Symptoms of corrupted encoding
+- Chinese text appears as Latin-1 gibberish (e.g., `èŽ‰äºž` instead of `莉亞`)
+- BOM (`EF BB BF`) added to file
+- File is valid UTF-8 but text is garbled
+
+### Fix method (if corruption already happened)
+The corruption chain is: original UTF-8 → read as cp1252 → re-encoded as UTF-8. To reverse, map each garbled character back to its original cp1252 byte, then decode as UTF-8. Be careful to include C1 control chars (0x81, 0x8D, 0x8F, 0x90, 0x9D) which are undefined in cp1252 but appear as U+0081 etc.
