@@ -250,12 +250,35 @@ Troops: ID 1-7 + ID 8-15 multi-enemy. Ch2 boss drops Dragon Blade (Weapon 5, 1/4
 
 RPG Maker MZ JSON files are **UTF-8 without BOM**. Using PowerShell to edit these files can corrupt Chinese text via cp1252 mojibake.
 
-### Safe approach: Use `rpgmaker-mz-*` MCP tools instead
+### Safe approach: Use `rpgmaker-mz` MCP tools (via `opencode-mcp-tool-search`)
 
-```javascript
-rpgmaker-mz_add_event_commands(mapId, eventId, commands, append)
-rpgmaker-mz_update_event(mapId, eventId, ...)
+All MCP tools are loaded on-demand through the search plugin. First search, then call:
+
 ```
+mcp_tool_search({ query: "event commands" })
+→ mcp_call_tool({ server: "rpgmaker-mz", tool: "add_event_commands", args: { mapId, eventId, commands, append } })
+
+mcp_tool_search({ query: "create entity" })
+→ mcp_call_tool({ server: "rpgmaker-mz", tool: "create_entity", args: { entityType, data } })
+
+mcp_tool_search({ query: "load project" })
+→ mcp_call_tool({ server: "rpgmaker-mz", tool: "load_project", args: { projectPath } })
+```
+
+Available tools: `load_project`, `create_project`, `get_project_info`, `list_resources`, `list_entities`, `get_entity`, `create_entity`, `update_entity`, `delete_entity`, `search_entities`, `list_events`, `create_event`, `update_event`, `add_event_commands`, `delete_event`, map tools, scenario tools.
+
+Always start a session with `load_project` before using other tools.
+
+Project path: `C:\Users\Nitro v15\Desktop\AllProjectFromAI\RPGmakerAI\WorldsGreatestMercenary`
+
+### MCP Tool Search Plugin
+
+When the session starts:
+1. Run `mcp_tool_search({ list_servers: true })` to verify servers are connected
+2. Search for tools: `mcp_tool_search({ query: "..." })`
+3. Call tools: `mcp_call_tool({ server, tool, args })`
+4. Get tool schema: `mcp_tool_info({ tool_name: "..." })`
+5. Check status: `mcp_tool_search_status()`
 
 ### If you MUST edit via script, use Python (not PowerShell)
 

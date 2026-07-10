@@ -22,6 +22,27 @@ __MACOSX
 # Temp scripts
 *.py
 
+# Temp debug files (investigation notes)
+debug_map002.txt
+investigation.txt
+map003_ev12.txt
+verify_fix.txt
+
+# Temp labeled images
+data/Outside_*_labeled.png
+
+# Editor backup files
+*.backup.json
+
+# VisuStella plugins (paid content, not enabled)
+js/plugins/VisuMZ_*.js
+js/plugins/EnemyHPBars.js
+js/plugins/--------------------------.js
+js/plugins_sample.js
+
+# VisuStella tilesets (paid content, not used)
+img/tilesets/*_VS.png
+
 # nw.js runtime (Game.exe deployment)
 Game.exe
 nw.dll

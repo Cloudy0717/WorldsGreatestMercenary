@@ -16,7 +16,7 @@
     "volume": 90
   },
   "disableDashing": false,
-  "displayName": "",
+  "displayName": "试炼之塔1F",
   "encounterList": [],
   "encounterStep": 30,
   "height": 53,
@@ -31,6 +31,7 @@
   "specifyBattleback": true,
   "tilesetId": 4,
   "width": 49,
+  "id": 22,
   "data": [
     1536,
     1536,
@@ -15685,15 +15686,15 @@
           "walkAnime": true
         }
       ],
-      "x": 24,
-      "y": 48
+      "x": 28,
+      "y": 28
     },
     {
       "id": 1,
       "name": "转职祭坛",
       "note": "",
       "x": 24,
-      "y": 24,
+      "y": 25,
       "pages": [
         {
           "conditions": {
@@ -15716,8 +15717,8 @@
             "tileId": 0,
             "characterName": "!Other1",
             "direction": 2,
-            "pattern": 1,
-            "characterIndex": 4
+            "pattern": 0,
+            "characterIndex": 6
           },
           "moveFrequency": 3,
           "moveRoute": {
@@ -15912,6 +15913,5 @@
         }
       ]
     }
-  ],
-  "id": 22
+  ]
 }
